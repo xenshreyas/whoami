@@ -1,0 +1,32 @@
+---
+title: 'Compilers Are Honest Systems'
+publishedAt: '2026-02-01'
+summary: 'Part of why programming languages keep pulling me back is that compilers are unusually honest about where the complexity lives.'
+---
+
+I keep coming back to programming languages because they reward precision.
+
+A lot of software work is about managing fuzzy constraints: user taste, product tradeoffs, shifting deadlines, and partial information. That work matters. I enjoy it. But compilers feel different. They are one of the few places in software where the rules can be made explicit and where a cleaner model really does remove whole categories of confusion.
+
+What I like most is that a compiler forces you to be honest. If your representation is muddy, your implementation gets muddy with it. If your invariants are weak, every later pass becomes harder. There is very little room to hide.
+
+Even a toy pipeline says a lot:
+
+```ts
+type Token = { kind: 'number' | 'plus'; value: string }
+
+type Expr =
+  | { type: 'NumberLiteral'; value: number }
+  | { type: 'BinaryExpr'; left: Expr; right: Expr }
+
+function lower(expr: Expr): string {
+  if (expr.type === 'NumberLiteral') return `push ${expr.value}`
+  return `${lower(expr.left)}\n${lower(expr.right)}\nadd`
+}
+```
+
+That is obviously tiny, but it shows the shape of the appeal. A program becomes a series of transformations, and each stage can be judged for clarity on its own terms.
+
+I do not think compiler construction is interesting only because it is intellectually clean. I think it is useful because it sharpens how you think about every other system. Good parser design teaches API design. Type systems sharpen how you model state. Optimization work teaches restraint.
+
+When a system is honest, you can improve it without guessing.
