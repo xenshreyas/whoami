@@ -7,8 +7,9 @@ export default function HomePage() {
   return (
     <section className="space-y-8 sm:space-y-10">
       <div className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">
+        <h1 className="flex items-baseline gap-2 text-2xl font-semibold tracking-tight">
           {siteConfig.name}
+          <span className="font-mono text-[20px] font-normal text-[var(--subtle)]">/ ʃreɪ·əs / <em>Ray</em></span>
         </h1>
         <p className="text-[var(--subtle)]"><em>{siteConfig.tagline}</em></p>
       </div>
